@@ -1,0 +1,23 @@
+﻿
+
+<MudNavMenu>
+@*    <MudNavLink Href="" Match="NavLinkMatch.All" Icon="@Icons.Filled.Dashboard" IconColor="Color.Inherit">Home</MudNavLink>
+    <MudNavLink Href="counter" Icon="@Icons.Filled.Timer" IconColor="Color.Inherit">Counter</MudNavLink>
+    <MudNavLink Href="fetchdata" Icon="@Icons.Filled.FileDownload" IconColor="Color.Inherit">Fetch data</MudNavLink>*@
+
+    <MudTextField Class="px-4 mt-4" Label="New set" Variant="Variant.Text" @bind-Value="SetTitle" AutoFocus="AutoFocus" Style="cursor: pointer" />
+
+</MudNavMenu>
+
+@code {
+    private bool collapseNavMenu = true;
+    private string SetTitle { get; set; } = string.Empty;
+    private bool AutoFocus { get; set; } = false;
+
+    private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+
+    private void ToggleNavMenu()
+    {
+        collapseNavMenu = !collapseNavMenu;
+    }
+}

@@ -1,0 +1,51 @@
+﻿@inherits LayoutComponentBase
+
+<MudLayout>
+    <MudAppBar Elevation="1">
+        <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start"
+                       OnClick="@((e) => DrawerToggle())" />
+        <MudSpacer />
+        <MudIconButton Icon="@Icons.Material.Filled.MoreVert" Color="Color.Inherit" Edge="Edge.End" />
+    </MudAppBar>
+    <MudDrawer @bind-Open="_drawerOpen" Elevation="2">
+        <MudDrawerHeader>
+            <MudText Typo="Typo.h5">Flash Cards</MudText>
+        </MudDrawerHeader>
+        <MudDivider />
+        <NavMenu />
+    </MudDrawer>
+    <MudMainContent Class="px-8" MaxWidth="MaxWidth.False">
+        @Body
+    </MudMainContent>
+</MudLayout>
+
+@code {
+    bool _drawerOpen = true;
+
+    void DrawerToggle()
+    {
+        _drawerOpen = !_drawerOpen;
+    }
+
+    readonly MudTheme _customTheme = new MudTheme()
+        {
+            Palette = new Palette()
+            {
+                Primary = "#2596be",
+                Secondary = "#2596be",
+                AppbarBackground = "#2596be",
+                Error = "#dc3545",
+                Success = "#198754",
+                Info = "#0d6efd"
+            },
+
+            LayoutProperties = new LayoutProperties()
+            {
+                DrawerWidthLeft = "320px"
+            }
+        };
+}
+
+<MudThemeProvider Theme="_customTheme" />
+<MudDialogProvider />
+<MudSnackbarProvider />

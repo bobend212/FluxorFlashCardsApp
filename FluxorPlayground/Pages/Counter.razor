@@ -1,0 +1,54 @@
+﻿@page "/counter"
+
+@inherits Fluxor.Blazor.Web.Components.FluxorComponent
+@using Fluxor
+@inject IState<FluxorPlayground.Store.CounterState> CounterState
+@inject IDispatcher Dispatcher
+
+@inject ILocalStorageService LocalStorage
+
+<PageTitle>Counter</PageTitle>
+
+<h1>Counter</h1>
+
+<p role="status">Current count: @currentCount</p>
+@if(x > 0)
+{
+    <p role="status">Current count (in memory): @x</p>
+}
+
+
+
+<button class="btn btn-primary" @onclick="IncrementCount">Increment val</button>
+<button class="btn btn-primary" @onclick="GetCountVal">Get val</button>
+<button class="btn btn-outline-danger" @onclick="ResetCountVal">Reset val</button>
+
+@code {
+    private int currentCount => CounterState.Value.Count;
+    private int x = 0;
+
+    protected override async Task OnInitializedAsync()
+    {
+        x = await LocalStorage.GetItemAsync<int>("counterValue");
+    }
+
+    private async Task IncrementCount()
+    {
+        //currentCount++;
+        Dispatcher.Dispatch(new FluxorPlayground.Store.AddCounter());
+        await LocalStorage.SetItemAsync("counterValue", currentCount);
+    }
+
+    private async Task GetCountVal()
+    {
+        x = await LocalStorage.GetItemAsync<int>("counterValue");
+    }
+
+    private async Task ResetCountVal()
+    {
+        await LocalStorage.RemoveItemAsync("counterValue");
+        x = 0;
+    }
+
+
+}
